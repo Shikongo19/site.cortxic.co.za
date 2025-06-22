@@ -17,12 +17,18 @@
     
     h1, h2, h3, h4, h5, h6 {
         font-family: 'Poppins', sans-serif;
+        font-weight: bold;
     }
     
     /* ################################################################################################# */
 
     .flex{
         display: flex;
+    }
+
+    .flex-raw{
+        flex: 1;
+        min-width: 200px;
     }
 
     .fullflex{
