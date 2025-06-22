@@ -1,0 +1,52 @@
+# Enable mod_rewrite for URL rewriting
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    
+    # If your project is in a subdirectory, set the base path here
+    # RewriteBase /subdirectory/
+    
+    # Redirect to www (optional for localhost - usually disabled)
+    # RewriteCond %{HTTP_HOST} !^www\. [NC]
+    # RewriteRule ^(.*)$ http://www.%{HTTP_HOST}/$1 [R=301,L]
+    
+    # Remove trailing slashes
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^(.*)/$ /$1 [L,R=301]
+    
+    # Front controller pattern - redirect all requests to index.php
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteRule ^ index.php [L]
+</IfModule>
+
+# Error handling
+ErrorDocument 404 /404.php
+ErrorDocument 403 /403.php
+ErrorDocument 500 /500.php
+
+# Security enhancements
+<IfModule mod_headers.c>
+    # Protect against XSS attacks
+    Header set X-XSS-Protection "1; mode=block"
+    
+    # Prevent mime based attacks
+    Header set X-Content-Type-Options "nosniff"
+</IfModule>
+
+# Disable directory browsing
+Options -Indexes
+
+# Prevent access to specific files
+<FilesMatch "(\.env|\.gitignore|composer\.json|composer\.lock)$">
+    Order allow,deny
+    Deny from all
+</FilesMatch>
+
+# PHP settings (override php.ini for this directory)
+<IfModule mod_php7.c>
+    php_value upload_max_filesize 20M
+    php_value post_max_size 22M
+    php_value memory_limit 256M
+    php_value max_execution_time 300
+    php_value max_input_time 300
+</IfModule>

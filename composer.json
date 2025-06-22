@@ -1,0 +1,15 @@
+{
+    "name": "giide/site.cortxic.co.za",
+    "autoload": {
+        "psr-4": {
+            "Giide\\SiteCortxicCoZa\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Giideon Victory",
+            "email": "shikongov02@gmail.com"
+        }
+    ],
+    "require": {}
+}
